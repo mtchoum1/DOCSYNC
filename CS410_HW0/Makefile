@@ -3,17 +3,17 @@ LIBS := -lbfd
 
 #Objects
 OBJS := objsect.o objsym.o objcopy.o
-GETSECTIONS_OBJS := getsections.o getsections_ld.o
+GETSECTIONS_OBJS := getsections.o
 GETSYMS_OBJS := getsyms.o
 
 all: static_libs getsections getsyms 
 
 objsect.o: objsect.c
-	gcc -c objsect.c -o objsect.o
+	gcc -fPIC -c objsect.c -o objsect.o
 objsym.o: objsym.c
-	gcc -c objsym.c -o objsym.o
+	gcc -fPIC -c objsym.c -o objsym.o
 objcopy.o: objcopy.c
-	gcc -c objcopy.c -o objcopy.o
+	gcc -fPIC -c objcopy.c -o objcopy.o
 getsections.o: getsections.c
 	gcc -c getsections.c -o getsections.o
 getsections_dl.o: getsections_dl.c
@@ -23,10 +23,7 @@ getsyms.o: getsyms.c
 static_libs: ${OBJS}
 	ar rcs libobjdata.a ${OBJS}
 shared_libs: ${OBJS}
-	cc -fPIC -c util_file.c
-	cc -fPIC -c util_net.c
-	cc -fPIC -c util_math.c
-	cc -shared libobjdata.so ${OBJS}
+	gcc -shared libobjdata.so - ${OBJS}
 getsections: ${GETSECTIONS_OBJS} static_libs
 	gcc ${GETSECTIONS_OBJS} ./libobjdata.a -o getsections ${LIBS}
 getsyms: ${GETSYMS_OBJS} static_libs

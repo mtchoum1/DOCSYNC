@@ -24,5 +24,4 @@ void prints_sym(bfd *abfd)
   }
 
   free(symtab);
-  bfd_close(abfd);
 }

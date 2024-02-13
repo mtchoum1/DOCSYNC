@@ -18,6 +18,8 @@ getsections.o: getsections.c
 	gcc -c getsections.c -o getsections.o
 getsections_dl.o: getsections_dl.c
 	gcc -c getsections_dl.c -o getsections_dl.o
+getsyms_dl.o: getsyms_dl.c
+	gcc -c getsyms_dl.c -o getsyms_dl.o
 getsyms.o: getsyms.c
 	gcc -c getsyms.c -o getsyms.o
 static_libs: ${OBJS}
@@ -32,8 +34,10 @@ objcopy: $ static_libs
 	gcc ./libobjdata.a -o objcopy ${LIBS}
 getsections_dl: getsections_dl.o share_libs
 	gcc getsections_dl.o  -L. -o getsections_dl ${LIBS}
+getsyms_dl: getsyms_dl.o share_libs
+	gcc getsyms_dl.o  -L. -o getsyms_dl ${LIBS}
 clean:
-	rm -f empty.o getsections_dl.o ${OBJS} ${GETSECTIONS_OBJS} ${GETSYMS_OBJS} libobjdata.a
+	rm -f empty.o getsyms_dl.o getsections_dl.o ${OBJS} ${GETSECTIONS_OBJS} ${GETSYMS_OBJS} libobjdata.a
 empty: empty.o
 	ld -g empty.o -o empty
 

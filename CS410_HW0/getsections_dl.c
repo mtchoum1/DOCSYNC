@@ -1,12 +1,29 @@
 #include "libobjdata.h"
 #include <dlfcn.h>
 
+#define RDTSC(var)
+{
+  uint32_t var##_lo, var##_hi;						
+  asm volatile("lfence\n\trdtsc" : "=a"(var##_lo), "=d"(var##_hi));
+  var = var##_hi;
+  var <<= 32;
+  var |= var##_lo;
+}
+
+unsigned long long start, finish;
+
 int main(int argc, char *argv[])
 {
   void* lib_handle;
   bfd *abfd;
+  RDTSC(start);
+  if (argc != 3)
+  {
+    dlclose(lib_handle);
+    return 1;
+  }
 
-  lib_handle = dlopen("./libobjdata.so", RTLD_LAZY);
+  lib_handle = dlopen("./libobjdata.so",  atoi(argv[2]));
   if (!lib_handle) {
     dlerror();
     return 1;
@@ -23,11 +40,6 @@ int main(int argc, char *argv[])
   }
 
   bfd_init();
-  if (argc != 2)
-  {
-    dlclose(lib_handle);
-    return 1;
-  }
 
   abfd = bfd_openr(argv[1], NULL);
   if (!abfd) {
@@ -47,5 +59,6 @@ int main(int argc, char *argv[])
   bfd_map_over_sections(abfd, (void (*)(bfd *, asection *, void *))printsect, NULL);
   bfd_close(abfd);
   dlclose(lib_handle);
+  RDTSC(finish);
   return 0;
 }

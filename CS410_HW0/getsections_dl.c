@@ -1,12 +1,12 @@
 #include "libobjdata.h"
 #include <dlfcn.h>
-
-#define RDTSC(var)                                                      
-(uint32_t var##_lo, var##_hi;
- asm volatile("lfence\n\trdtsc" : "=a"(var##_lo), "=d"(var##_hi));
- var = var##_hi;
- var <<= 32;								
- var |= var##_lo;)
+#include <stdint.h>
+#define RDTSC(var)
+{
+  uint64_t var_lo, var_hi;
+  asm volatile("lfence\n\trdtsc" : "=a"(var_lo), "=d"(var_hi));
+  var = (((uint64_t)var_hi) | (((uint64_t)var_lo) << 32));
+}
 
 unsigned long long start, finish;
 

@@ -25,7 +25,7 @@ getsyms.o: getsyms.c
 static_libs: ${OBJS}
 	ar rcs libobjdata.a ${OBJS}
 share_libs: ${OBJS}
-	gcc -shared -o libobjdata.so ${OBJS}
+	gcc -shared -o libobjdata.so ${OBJS} ${LIBS}
 getsections: ${GETSECTIONS_OBJS} static_libs
 	gcc ${GETSECTIONS_OBJS} ./libobjdata.a -o getsections ${LIBS}
 getsyms: ${GETSYMS_OBJS} static_libs

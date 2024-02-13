@@ -31,7 +31,7 @@ getsyms: ${GETSYMS_OBJS} static_libs
 objcopy: $ static_libs
 	gcc ./libobjdata.a -o objcopy ${LIBS}
 getsections_dl: getsections_dl.o share_libs
-	gcc getsections_dl.o -L. -o getsections_dl ${LIBS}
+	gcc getsections_dl.o  -L. -o getsections_dl ${LIBS}
 clean:
 	rm -f empty.o getsections_dl.o ${OBJS} ${GETSECTIONS_OBJS} ${GETSYMS_OBJS} libobjdata.a
 empty: empty.o

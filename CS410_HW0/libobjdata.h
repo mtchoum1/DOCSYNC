@@ -14,3 +14,5 @@
 void print_section_info(bfd *abfd, asection *section, void *obj);
 
 void convert_i_str(int number, char * buffer);
+
+void vma_to_hex_str(bfd_vma value, char* buffer, int buffer_length);

@@ -13,7 +13,7 @@ void prints_sym(bfd *abfd)
     const char* name = bfd_asymbol_name(symtab[i]);
     bfd_vma vma = bfd_asymbol_value(symtab[i]);
     char vmabuff[100];
-    convert_i_str(vma, vmabuff);
+    vma_to_hex_str(vma, vmabuff, 14);
     write(1, vmabuff, strlen(vmabuff));
     write(1, " ", strlen(" "));
     write(1, name, strlen(name));

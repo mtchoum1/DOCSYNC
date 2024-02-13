@@ -20,6 +20,33 @@ void convert_i_str(int number, char * buffer)
  buffer[index] = '\0';
 }
 
+const char* const hex_digits = "0123456789abcdef";
+
+void vma_to_hex_str(bfd_vma value, char* buffer, int buffer_length)
+{
+  for(int i = buffer_length - 1; i >= 0; --i)
+  {
+    buffer[i] = hex_digits[value % 16];
+    value /= 16;
+  }
+}
+void size_to_hex_str(bfd_size_type value, char* buffer, int buffer_length)
+{
+  for(int i = buffer_length - 1; i >= 0; --i)
+  {
+    buffer[i] = hex_digits[value % 16];
+    value /= 16;
+  }
+}
+void pos_to_hex_str(file_ptr value, char* buffer, int buffer_length)
+{
+  for(int i = buffer_length - 1; i >= 0; --i)
+  {
+    buffer[i] = hex_digits[value % 16];
+    value /= 16;
+  }
+}
+
 void print_section_info(bfd *abfd, asection *section, void *obj)
 {
   const char* name = section -> name;
@@ -29,9 +56,9 @@ void print_section_info(bfd *abfd, asection *section, void *obj)
   char posbuff[100];
   char vmabuff[100];
   char sizebuff[100];
-  convert_i_str(pos, posbuff);
-  convert_i_str(vma, vmabuff);
-  convert_i_str(size, sizebuff);
+  pos_to_hex_str(pos, posbuff, 14);
+  vma_to_hex_str(vma, vmabuff, 14);
+  size_to_hex_str(size, sizebuff, 14);
   write(1, name, strlen(name));
   write(1, "\n", strlen("\n"));
   write(1, vmabuff, strlen(vmabuff));

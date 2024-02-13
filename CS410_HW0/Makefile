@@ -22,18 +22,18 @@ getsyms.o: getsyms.c
 	gcc -c getsyms.c -o getsyms.o
 static_libs: ${OBJS}
 	ar rcs libobjdata.a ${OBJS}
-shared_libs: ${OBJS}
-	gcc -shared libobjdata.so - ${OBJS}
+share_libs: ${OBJS}
+	gcc -shared -o libobjdata.so ${OBJS}
 getsections: ${GETSECTIONS_OBJS} static_libs
 	gcc ${GETSECTIONS_OBJS} ./libobjdata.a -o getsections ${LIBS}
 getsyms: ${GETSYMS_OBJS} static_libs
 	gcc ${GETSYMS_OBJS} ./libobjdata.a -o getsyms ${LIBS}
 objcopy: $ static_libs
 	gcc ./libobjdata.a -o objcopy ${LIBS}
-getsections_dl: getsections_dl.o shared_libs
-	gcc getsection_dl.o ./libobjdata.so -o getsections_dl ${LIBS}
+getsections_dl: getsections_dl.o share_libs
+	gcc getsections_dl.o -L. -o getsections_dl ${LIBS}
 clean:
-	rm -f empty.o ${OBJS} ${GETSECTIONS_OBJS} ${GETSYMS_OBJS} libobjdata.a
+	rm -f empty.o getsections_dl.o ${OBJS} ${GETSECTIONS_OBJS} ${GETSYMS_OBJS} libobjdata.a
 empty: empty.o
 	ld -g empty.o -o empty
 

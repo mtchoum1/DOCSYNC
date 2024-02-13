@@ -2,25 +2,6 @@
 #include <bfd.h>
 #include <unistd.h>
 #include <string.h>
-void convert_i_str(int number, char * buffer)
-{
- int n, index = 0, len = 0, tmp;
- tmp = number;
- while (number != 0)
- {
-   number = number / 10;
-   len++;
- }
- number = tmp;
- while(number != 0)
- {
-   n = number % 10;
-   buffer[len - index - 1] = n + '0';
-   number = number / 10;
-   index++;
- }
- buffer[index] = '\0';
-}
 
 void prints_sym(bfd *abfd)
 {

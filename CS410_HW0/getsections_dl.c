@@ -1,14 +1,12 @@
 #include "libobjdata.h"
 #include <dlfcn.h>
 
-#define RDTSC(var)
-{
-  uint32_t var##_lo, var##_hi;						
-  asm volatile("lfence\n\trdtsc" : "=a"(var##_lo), "=d"(var##_hi));
-  var = var##_hi;
-  var <<= 32;
-  var |= var##_lo;
-}
+#define RDTSC(var)                                                      
+(uint32_t var##_lo, var##_hi;
+ asm volatile("lfence\n\trdtsc" : "=a"(var##_lo), "=d"(var##_hi));
+ var = var##_hi;
+ var <<= 32;								
+ var |= var##_lo;)
 
 unsigned long long start, finish;
 
@@ -19,7 +17,6 @@ int main(int argc, char *argv[])
   RDTSC(start);
   if (argc != 3)
   {
-    dlclose(lib_handle);
     return 1;
   }
 

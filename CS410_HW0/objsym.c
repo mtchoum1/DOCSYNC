@@ -1,7 +1,4 @@
-#include <stdlib.h>
-#include <bfd.h>
-#include <unistd.h>
-#include <string.h>
+#include "libobjdata.h"
 
 void prints_sym(bfd *abfd)
 {

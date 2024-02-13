@@ -1,8 +1,3 @@
-#include <stdlib.h>
-#include <bfd.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <string.h>
 #include "libobjdata.h"
 
 void copy_sect(bfd *abfd, const char *filename)

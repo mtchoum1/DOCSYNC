@@ -4,6 +4,10 @@
 #include <stdlib.h>
 #include <bfd.h>
 #include <unistd.h>
+#include <fcntl.h>
+#include <string.h>
+#include <dlfcn.h>
+#include <stdint.h>
 
 #endif
 

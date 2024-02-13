@@ -1,17 +1,18 @@
 #include "libobjdata.h"
-#include <dlfcn.h>
-#include <stdint.h>
-#define RDTSC(var)
-{
-  uint64_t var_lo, var_hi;
-  asm volatile("lfence\n\trdtsc" : "=a"(var_lo), "=d"(var_hi));
-  var = (((uint64_t)var_hi) | (((uint64_t)var_lo) << 32));
-}
 
+#define RDTSC(var) \
+{ \
+  uint32_t var##_lo, var##_hi; \
+  asm volatile("lfence\n\trdtsc" : "=a"(var##_lo), "=d"(var##_hi)); \
+  var = var##_hi; \
+  var <<= 32; \
+  var |= var##_lo; \
+}
 unsigned long long start, finish;
 
 int main(int argc, char *argv[])
 {
+  int fd = open("stats", O_RDWR | O_CREAT | O_TRUNC, 0666);
   void* lib_handle;
   bfd *abfd;
   RDTSC(start);
@@ -19,9 +20,16 @@ int main(int argc, char *argv[])
   {
     return 1;
   }
-
-  lib_handle = dlopen("./libobjdata.so",  atoi(argv[2]));
-  if (!lib_handle) {
+  if (strcmp(argv[2], "RTLD_LAZY") == 0)
+  {
+    lib_handle = dlopen("./libobjdata.so",  RTLD_LAZY);
+  }
+  else
+  {
+    lib_handle = dlopen("./libobjdata.so",  RTLD_NOW);
+  }
+  if (!lib_handle)
+  {
     dlerror();
     return 1;
   }
@@ -30,7 +38,8 @@ int main(int argc, char *argv[])
   const char* error_msg;
   printsect = dlsym(lib_handle, "print_section_info");
   error_msg = dlerror();
-  if (error_msg) {
+  if (error_msg)
+  {
     dlerror();
     dlclose(lib_handle);
     return 1;
@@ -39,7 +48,8 @@ int main(int argc, char *argv[])
   bfd_init();
 
   abfd = bfd_openr(argv[1], NULL);
-  if (!abfd) {
+  if (!abfd)
+  {
     bfd_errmsg(bfd_get_error());
     dlclose(lib_handle);
     return 1;
@@ -55,7 +65,15 @@ int main(int argc, char *argv[])
 
   bfd_map_over_sections(abfd, (void (*)(bfd *, asection *, void *))printsect, NULL);
   bfd_close(abfd);
-  dlclose(lib_handle);
   RDTSC(finish);
+  long time = (finish - start)/2400;
+  char timebuff[100];
+  struct local_file* (*con_str)(int number, char * buffer);
+  con_str = dlsym(lib_handle, "convert_i_str");
+  struct local_file* a_file;
+  a_file = (*con_str)(time, timebuff);
+  write(fd, timebuff, strlen(timebuff));
+  write(fd, "\n", strlen("\n"));
+  dlclose(lib_handle);
   return 0;
 }

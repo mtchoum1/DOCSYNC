@@ -16,31 +16,31 @@ int main(int argc, char *argv[])
   void* lib_handle;
   bfd *abfd;
   long sumtime = 0;
-  RDTSC(start);
   if (argc != 3)
   {
     return 1;
   }
-  if (strcmp(argv[2], "RTLD_NOW") == 0)
-  {
-    lib_handle = dlopen("./libobjdata.so", RTLD_NOW);
-  }
-  else if (strcmp(argv[2], "RTLD_LAZY") == 0)
-  {
-    lib_handle = dlopen("./libobjdata.so", RTLD_LAZY);
-  }
-  
   write(fd, "Time getsections_dl with ", strlen("Time getsections_dl with "));
   write(fd, argv[2], strlen(argv[2]));
   write(fd, "\n", strlen("\n"));
-  if (!lib_handle)
-  {
-    dlerror();
-    return 1;
-  }
-
   for (int i = 0; i < 50; i++)
   {
+    RDTSC(start);
+    if (strcmp(argv[2], "RTLD_NOW") == 0)
+    {
+      lib_handle = dlopen("./libobjdata.so", RTLD_NOW);
+    }
+    else if (strcmp(argv[2], "RTLD_LAZY") == 0)
+    {
+      lib_handle = dlopen("./libobjdata.so", RTLD_LAZY);
+    }
+  
+    if (!lib_handle)
+    {
+      dlerror();
+      return 1;
+    }
+    
     struct local_file* (*printsect)(bfd *abfd, asection *section, void *obj);
     const char* error_msg;
     printsect = dlsym(lib_handle, "print_section_info");

@@ -1,0 +1,13 @@
+	.intel_syntax noprefix
+
+	.data
+	.fill 16, 1, 0x1
+
+	.text                        
+
+	.global _start                
+
+_start:	                               
+	.byte 0x00, 0x00, 0x00, 0x00 
+	.byte 0x00, 0x00, 0x00, 0x00  
+	.byte 0x00, 0x00, 0x00, 0x00

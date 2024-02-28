@@ -1,0 +1,3 @@
+#include "libobjdata.h"
+
+void 

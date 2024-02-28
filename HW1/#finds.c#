@@ -1,0 +1,29 @@
+#include <stdio.h> 
+#include <dirent.h>
+#include <sys/stat.h>
+  
+int main(void) 
+{ 
+  struct dirent *de;   
+  DIR *dr = opendir(".");
+  struct stat buffer;
+  
+  if (dr == NULL) 
+  {
+    printf("Could not open current directory" );
+    return 0; 
+  }
+  
+  while ((de = readdir(dr)) != NULL)
+  {
+    if (stat(de->d_name, &buffer) == 0)
+    {
+     
+    }
+    printf("%s\n", de->d_name);
+    printf("%s\n", buffer.st_mode);
+  }
+  
+  closedir(dr);     
+  return 0; 
+} 

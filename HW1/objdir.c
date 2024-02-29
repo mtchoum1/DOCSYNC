@@ -6,6 +6,7 @@ void loopdir(char *pathname, char *fval, int lflag, char *str)
   DIR *dr = opendir(pathname);
   struct stat buf;
   char *ptr;
+  char *actualpath;
   
   if (dr == NULL) 
   {
@@ -18,20 +19,51 @@ void loopdir(char *pathname, char *fval, int lflag, char *str)
     snprintf(full_name, 100, "%s/%s", pathname, de->d_name);
     if (strcmp(de->d_name, ".") != 0 && strcmp(de->d_name, "..") != 0)
     {
-      stat(full_name, &buf);
+      lstat(full_name, &buf);
       if (S_ISDIR(buf.st_mode))
       {
 	loopdir(full_name, fval, lflag, str);
       }
       else
       {
-	if (fval != NULL && de->d_name[strlen(de->d_name)-1] == fval[strlen(fval)-1])
+	if (S_ISLNK(buf.st_mode))
 	{
-	  checkfile(full_name,fval, lflag, str);
+	  actualpath = realpath(full_name, NULL);
+	  if (lflag == 1 && fval == NULL)
+	  {
+	    if (actualpath != NULL)
+	    {
+	      checkfile(actualpath,fval, lflag, str);
+	      free(actualpath);
+	    }
+	    else
+	    {
+	      printf("No symbolic link");
+	    }
+	  }
+	  else if (lflag == 1 && fval != NULL && full_name[strlen(full_name)-1] == fval[strlen(fval)-1])
+	  {
+	    if (actualpath != NULL)
+            {
+              checkfile(actualpath,fval, lflag, str);
+	      free(actualpath);
+            }
+	    else
+            {
+              printf("No symbolic link");
+            }
+	  }
 	}
-	else if (fval == NULL)
+	else
 	{
-	  checkfile(full_name,fval, lflag, str);
+	  if (fval != NULL && de->d_name[strlen(de->d_name)-1] == fval[strlen(fval)-1])
+	  {
+	      checkfile(full_name,fval, lflag, str);
+	  }
+	  else if (fval == NULL)
+	  {
+	    checkfile(full_name,fval, lflag, str);
+	  }
 	}
       }
     }

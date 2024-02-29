@@ -1,9 +1,14 @@
 #include "libobjdata.h"
   
-int main(void) 
-{ 
+int main(int argc, char *argv[]) 
+{
+  if (argc != 2)
+  {
+    printf("Write directory name");
+    return 0;
+  }
   struct dirent *de;   
-  DIR *dr = opendir(".");
+  DIR *dr = opendir(argv[1]);
   struct stat buf;
   char *ptr;
   

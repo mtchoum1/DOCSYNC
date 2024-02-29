@@ -2,12 +2,48 @@
   
 int main(int argc, char *argv[]) 
 {
-  if (argc != 2)
+  char *pathname = NULL;
+  char *fval = NULL;
+  int lflag = 0;
+  char *str = NULL;
+  int c;
+
+  opterr = 0;
+
+  while ((c = getopt (argc, argv, "pfls:")) != -1)
   {
-    printf("Write directory name");
-    return 0;
+    switch (c)
+    {
+    case 'p':
+      pathname = optarg;
+      break;
+    case 'f':
+      fval = optarg;
+      break;
+    case 'l':
+      lflag = 1;
+      break;
+    case 's':
+      str = optarg;
+      break;
+    case '?':
+      if (optopt == 'p')
+	fprintf (stderr, "Option -%c requires an argument.\n", optopt);
+      if (optopt == 'f')
+        fprintf (stderr, "Option -%c requires an argument.\n", optopt);
+      if (optopt == 's')
+        fprintf (stderr, "Option -%c requires an argument.\n", optopt);
+      else if (isprint (optopt))
+	fprintf (stderr, "Unknown option `-%c'.\n", optopt);
+      else
+	fprintf (stderr,"Unknown option character `\\x%x'.\n",optopt);
+        return 1;
+      default:
+        abort ();
+    }
   }
 
-  loopdir(argv[1]);
+  printf("%s %s", pathname, str);
+  loopdir(pathname, str);
   return 0; 
 } 

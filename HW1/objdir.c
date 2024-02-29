@@ -1,6 +1,6 @@
 #include "libobjdata.h"
 
-void loopdir(char *pathname)
+void loopdir(char *pathname, char *str)
 {
   struct dirent *de;   
   DIR *dr = opendir(pathname);
@@ -21,11 +21,11 @@ void loopdir(char *pathname)
       stat(full_name, &buf);
       if (S_ISDIR(buf.st_mode))
       {
-	loopdir(full_name);
+	loopdir(full_name, str);
       }
       else
       {
-	printf("%s\n", full_name);
+	checkfile(full_name, str);
       }
     }
   }

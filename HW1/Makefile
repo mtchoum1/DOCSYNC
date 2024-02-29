@@ -1,7 +1,9 @@
-OBJS := objdir.o
+OBJS := objdir.o objfile.o
 
 objdir.o: objdir.c
 	gcc -c objdir.c -o objdir.o
+objfile.o: objfile.c
+	gcc -c objfile.c -o objfile.o
 
 static_libs: ${OBJS}
 	ar rcs libobjdata.a ${OBJS}

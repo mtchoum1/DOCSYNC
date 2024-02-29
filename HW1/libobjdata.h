@@ -8,3 +8,5 @@
 #endif
 
 char *get_filetype(struct stat buf);
+
+void loopdir(char *pathname);

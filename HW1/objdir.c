@@ -34,23 +34,21 @@ void loopdir(char *pathname, char *fval, int lflag, char *str)
 	    if (actualpath != NULL)
 	    {
 	      checkfile(actualpath,fval, lflag, str);
-	      free(actualpath);
 	    }
 	    else
 	    {
-	      printf("No symbolic link");
+	      perror("realpath");
 	    }
 	  }
-	  else if (lflag == 1 && fval != NULL && full_name[strlen(full_name)-1] == fval[strlen(fval)-1])
+	  else if (lflag == 1 && fval != NULL && actualpath[strlen(actualpath)-1] == fval[strlen(fval)-1])
 	  {
 	    if (actualpath != NULL)
             {
               checkfile(actualpath,fval, lflag, str);
-	      free(actualpath);
             }
 	    else
             {
-              printf("No symbolic link");
+              perror("realpath");
             }
 	  }
 	}

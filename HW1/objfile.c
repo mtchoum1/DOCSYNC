@@ -1,6 +1,6 @@
 #include "libobjdata.h"
 
-void checkfile(char *filename, char *fval, int lflag, char *str)
+void checkfile(char *filename,char *symname, char *fval, int lflag, char *str)
 {
   FILE * fp;
   char * line = NULL;
@@ -20,7 +20,7 @@ void checkfile(char *filename, char *fval, int lflag, char *str)
     {
       if((strstr(temp, str)) != NULL)
       {
-	printf("%s %d %s\n",filename, line_num, temp);
+	printf("%s %s %d %s\n",symname, filename, line_num, temp);
       }
       line_num++;
     }

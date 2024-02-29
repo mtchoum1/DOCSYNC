@@ -13,4 +13,4 @@
 
 void loopdir(char *pathname, char *fval, int lflag, char *str);
 
-void checkfile(char *pathname, char *fval, int lflag, char *str);
+void checkfile(char *pathname,char *symname, char *fval, int lflag, char *str);

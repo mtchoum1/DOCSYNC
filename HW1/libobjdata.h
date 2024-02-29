@@ -11,6 +11,6 @@
 
 #endif
 
-void loopdir(char *pathname, char *str);
+void loopdir(char *pathname, char *fval, int lflag, char *str);
 
-void checkfile(char *pathname, char *str);
+void checkfile(char *pathname, char *fval, int lflag, char *str);

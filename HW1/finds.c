@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 
   opterr = 0;
 
-  while ((c = getopt (argc, argv, "pfls:")) != -1)
+  while ((c = getopt (argc, argv, "p:f:ls:")) != -1)
   {
     switch (c)
     {
@@ -43,7 +43,6 @@ int main(int argc, char *argv[])
     }
   }
 
-  printf("%s %s", pathname, str);
-  loopdir(pathname, str);
+  loopdir(pathname, fval, lflag, str);
   return 0; 
 } 

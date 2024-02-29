@@ -1,6 +1,6 @@
 #include "libobjdata.h"
 
-void checkfile(char *filename, char *str)
+void checkfile(char *filename, char *fval, int lflag, char *str)
 {
   FILE * fp;
   char * line = NULL;

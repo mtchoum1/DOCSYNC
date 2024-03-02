@@ -14,3 +14,5 @@
 void loopdir(char *pathname, char *fval, int lflag, char *str);
 
 void checkfile(char *pathname,char *symname, char *fval, int lflag, char *str);
+
+void matchdot(char *filename,char *symname, int line_num, char *source, char *test);

@@ -1,6 +1,6 @@
 #include "libobjdata.h"
 
-void checkfile(char *filename,char *symname, char *fval, int lflag, char *str)
+void checkfile(char *filename, char *symname, char *fval, int lflag, char *str)
 {
   FILE * fp;
   char * line = NULL;
@@ -18,10 +18,7 @@ void checkfile(char *filename,char *symname, char *fval, int lflag, char *str)
   {
     while(fgets(temp, 512, fp) != NULL)
     {
-      if((strstr(temp, str)) != NULL)
-      {
-	printf("%s %s %d %s\n",symname, filename, line_num, temp);
-      }
+      matchdot(filename, symname, line_num, str, temp);
       line_num++;
     }
   }

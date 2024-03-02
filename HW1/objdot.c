@@ -28,8 +28,8 @@ void matchdot(char *filename,char *symname, int line_num, char *source, char *te
     node = matrix[node][test[index]==source[sindex]];
     if (prevnode + 1 == node)
     {
-      sindex++; 
-      index++;
+	sindex++; 
+	index++;
     }
     else
     {

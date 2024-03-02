@@ -6,21 +6,21 @@ void checkfile(char *filename, char *symname, char *fval, int lflag, char *str)
   char * line = NULL;
   size_t len = 0;
   ssize_t read;
-  char temp[512];
-  int line_num = 1;
+  int line_num = 0;
   fp = fopen(filename, "r");
   if (fp == NULL)
   {
     printf("no file");
   }
-
-  while ((read = getline(&line, &len, fp)) != -1)
+  char temp[512];
+  while(fgets(temp, 512, fp) != NULL)
   {
-    while(fgets(temp, 512, fp) != NULL)
+    for (int i = 0; i < strlen(temp); i++)
     {
-      matchdot(filename, symname, line_num, str, temp);
-      line_num++;
+      temp[i] = tolower(temp[i]);
     }
+    matchque(filename, symname, line_num, str, temp);
+    line_num++;
   }
 
   fclose(fp);

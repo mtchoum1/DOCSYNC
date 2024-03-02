@@ -19,7 +19,7 @@ void checkfile(char *filename, char *symname, char *fval, int lflag, char *str)
     {
       temp[i] = tolower(temp[i]);
     }
-    matchque(filename, symname, line_num, str, temp);
+    matchall(filename, symname, line_num, str, temp);
     line_num++;
   }
 

@@ -1,4 +1,4 @@
-OBJS := objdir.o objfile.o objdot.o objast.o objque.o
+OBJS := objdir.o objfile.o objdot.o objast.o objque.o objmatch.o
 
 objdir.o: objdir.c
 	gcc -c objdir.c -o objdir.o
@@ -10,6 +10,8 @@ objast.o: objast.c
 	gcc -c objast.c -o objast.o
 objque.o: objque.c
 	gcc -c objque.c -o objque.o
+objmatch.o: objmatch.c
+	gcc -c objmatch.c -o objmatch.o
 
 static_libs: ${OBJS}
 	ar rcs libobjdata.a ${OBJS}

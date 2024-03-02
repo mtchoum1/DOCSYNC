@@ -20,3 +20,5 @@ void matchdot(char *filename,char *symname, int line_num, char *source, char *te
 void matchast(char *filename,char *symname, int line_num, char *source, char *test);
 
 void matchque(char *filename,char *symname, int line_num, char *source, char *test);
+
+void matchall(char *filename,char *symname, int line_num, char *source, char *test);

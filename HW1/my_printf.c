@@ -42,53 +42,21 @@ void itoa (char *buf, int base, int d)
     }
 }
 
-void my_printf(const char *format, ...) {
-    // Pointer to the first argument after the format string
-    int *args = &format + 1;
-    char *temp = (char*)*args;
-    char buf[100];
-    itoa(buf, 's', temp);
-    printf("%s", temp);
-    // Iterate through the format string
-    // while (*format != '\0') 
-    // {
-    //     if (*format == '%') 
-    //     {
-    //         format++; // Move to the next character after '%'
-    //         switch (*format) 
-    //         {
-    //             case 's':
-    //                 printf("%s", (char*)*args);
-    //                 break;
-    //             case 'c':
-    //                 printf("%c", (char)*args);
-    //                 break;
-    //             case 'd':
-    //                 printf("%d", *args);
-    //                 break;
-    //             case 'u':
-    //                 printf("%u", (unsigned int)*args);
-    //                 break;
-    //             case 'x':
-    //                 printf("%x", *args);
-    //                 break;
-    //             default:
-    //                 putchar('%'); // Print '%' character if the format code is not recognized
-    //                 putchar(*format);
-    //                 break;
-    //         }
-    //         args++; // Move to the next argument
-    //     } 
-    //     else 
-    //     {
-    //         putchar(*format);
-    //     }
+void printArgs(int first, ...) {
+    printf("%d ", first);
 
-    //     format++; // Move to the next character in the format string
-    // }
+    int *ptr = &first + 1;
+    while (*ptr != -1) {
+        printf("%d ", *ptr);
+        ptr++;
+    }
+
+    printf("\n");
 }
 
 int main() {
-    my_printf("Hello, %s! Your age is %d and your score is %u. Hex value: %x\n", "John", 25, 100, 0xDEADBEEF);
+    printArgs(1, 2, 3, 4, 5, -1);
+    printArgs(10, 20, -1);
+
     return 0;
 }

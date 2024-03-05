@@ -44,10 +44,8 @@ void itoa (char *buf, int base, int d)
 
 void my_printf(const char *format, ...) {
     // Pointer to the first argument after the format string
-    int *args = &format + 1;
-    char *temp = (char*)*args;
-    char buf[100];
-    itoa(buf, 's', temp);
+    int *args = &format;
+    char *temp = *++args;
     printf("%s", temp);
     // Iterate through the format string
     // while (*format != '\0') 

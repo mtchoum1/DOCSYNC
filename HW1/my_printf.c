@@ -58,5 +58,5 @@ int main() {
     printArgs(1, 2, 3, 4, 5, -1);
     printArgs(10, 20, -1);
 
-    return 0;
+    return 0
 }

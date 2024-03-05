@@ -28,18 +28,29 @@ int main(int argc, char *argv[])
       break;
     case '?':
       if (optopt == 'p')
-	fprintf (stderr, "Option -%c requires an argument.\n", optopt);
+	printf ("Option -%c requires an argument.\n", optopt);
       if (optopt == 'f')
-        fprintf (stderr, "Option -%c requires an argument.\n", optopt);
+        printf ("Option -%c requires an argument.\n", optopt);
       if (optopt == 's')
-        fprintf (stderr, "Option -%c requires an argument.\n", optopt);
+        printf ("Option -%c requires an argument.\n", optopt);
       else if (isprint (optopt))
-	fprintf (stderr, "Unknown option `-%c'.\n", optopt);
+	printf ("Unknown option `-%c'.\n", optopt);
       else
-	fprintf (stderr,"Unknown option character `\\x%x'.\n",optopt);
+	printf ("Unknown option character `\\x%x'.\n",optopt);
         return 1;
       default:
         abort ();
+    }
+  }
+  for (int i = 0; i < strlen(str); i++)
+  {
+    if (isalnum(str[i]) == 0)
+    {
+      if (str[i] != '?' && str[i] != '.' && str[i] != '*' && str[i] != '(' && str[i] != ')')
+      {
+	printf("Incorrect expression. \n");
+	return 1;
+      }
     }
   }
 

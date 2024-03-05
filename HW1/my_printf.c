@@ -42,21 +42,53 @@ void itoa (char *buf, int base, int d)
     }
 }
 
-void printArgs(int first, ...) {
-    printf("%d ", first);
-
-    int *ptr = &first + 1;
-    while (*ptr != -1) {
-        printf("%d ", *ptr);
-        ptr++;
+void my_printf(char *str, ...)
+{
+  int *arg = &str + 4;
+    
+  while (*str != '\0')
+  {
+    if (*str == '%' && *(str + 1) == 'd') 
+    {
+      printf("%d", *arg);
+      arg += 2; 
+      str += 2; 
+    } 
+    else if (*str == '%' && *(str + 1) == 's') 
+    {
+      printf("%s", *arg);
+      arg += 2;
+      str += 2; 
+    } 
+    else if (*str == '%' && *(str + 1) == 'c') 
+    {
+      printf("%c", *arg);
+      arg += 2;
+      str += 2; 
+    } 
+    else if (*str == '%' && *(str + 1) == 'x') 
+    {
+      printf("%x", *arg);
+      arg += 2;
+      str += 2; 
+    } 
+    else if (*str == '%' && *(str + 1) == 'u') 
+    {
+      printf("%u", *arg);
+      arg += 2;
+      str += 2; 
+    } 
+    else 
+    {
+      putchar(*str);
+      str++;
     }
-
-    printf("\n");
+  }
 }
 
-int main() {
-    printArgs(1, 2, 3, 4, 5, -1);
-    printArgs(10, 20, -1);
-
-    return 0
+int main()
+{
+  my_printf("Hello, %s! Your age is %d and your score is %u. Hex value: %x\n", "John", 25, 100, 0xDEADBEEF);
+  
+  return 0;
 }

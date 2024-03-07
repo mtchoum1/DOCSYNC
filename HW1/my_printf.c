@@ -44,24 +44,44 @@ void itoa (char *buf, int base, int d)
 
 void my_printf(char *str, ...)
 {
-  int *arg = &str + 4;
+    char *arg[5];
+    register int *s __asm__( "esi" );
+    arg[0] = s;
+    register int *ss __asm__( "edx" );
+    arg[1] = ss;
+    register int *sss __asm__( "ecx" );
+    arg[2] = sss;
+    register int *ssss __asm__( "r8" );
+    arg[3] = ssss;
+    register int *sssss __asm__( "r9" );
+    arg[4] = sssss;
+    int i = 0;
+  
     
   while (*str != '\0')
   {
     if (*str == '%') 
     {
-        if (*str == '%' && *(str + 1) == 's') 
+        if (*(str + 1) == 's') 
         {
-          write(1, *arg, sizeof(*arg));
-          arg += 2;
+          write(1, arg[i], strlen(arg[i]));
+          i++;
           str += 2; 
-        } 
+        }
+        else if (*(str + 1) == 'c') 
+        {
+            char buf[1]; 
+            buf[0] = arg[i];
+          write(1, buf, 1);
+            i++;
+          str += 2; 
+        }
         else 
         {
-	  char buf[sizeof(*arg)];
-	  itoa(buf, *(str + 1), *arg);
+	  char buf[sizeof(arg[i])];
+	  itoa(buf, *(str + 1), arg[i]);
 	  write(1, buf, strlen(buf));
-          arg += 2;
+          i++;
           str += 2; 
         } 
     }
@@ -77,7 +97,7 @@ void my_printf(char *str, ...)
 
 int main()
 {
-  my_printf("Hello, %s! Your age is %d and your score is %u. Hex value: %x\n", "John", 25, 100, 0xDEADBEEF);
+  my_printf("Hello, %s! Your age is %d and your score is %u. Hex value: %x char: %c\n", "John", 25, 100, 0xDEADBEEF, 'h');
   
   return 0;
 }

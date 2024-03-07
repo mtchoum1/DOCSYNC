@@ -10,6 +10,8 @@ Test Code:
 
 make finds
 
-make my_printf \n
+make my_printf
+
 ./my_printf
+
 ./finds -p "pathname" -f h -l -s "string"

@@ -103,7 +103,9 @@ void my_printf(char *str, ...)
                 else if (*(str + 1) == 'c')
                 {
                     char c = *(char*)(argp);
-                    write(1, c, 1);
+                    char buf[1];
+                    buf[0] = c;
+                    write(1, buf, 1);
                     argp++;
                     str += 2;
                 }
@@ -142,4 +144,3 @@ int main()
   my_printf("Hello, %s! Your age is %d and your score is %u. Hex value: %x Char: %c String: %s WT%c \n", "John", 25, 100, 0xDEADBEEF, 'c', "hello", 'f');
   
   return 0;
-}

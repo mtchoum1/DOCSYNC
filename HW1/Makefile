@@ -1,15 +1,9 @@
-OBJS := objdir.o objfile.o objdot.o objast.o objque.o objmatch.o
+OBJS := objdir.o objfile.o objmatch.o
 
 objdir.o: objdir.c
 	gcc -c objdir.c -o objdir.o
 objfile.o: objfile.c
 	gcc -c objfile.c -o objfile.o
-objdot.o: objdot.c
-	gcc -c objdot.c -o objdot.o
-objast.o: objast.c
-	gcc -c objast.c -o objast.o
-objque.o: objque.c
-	gcc -c objque.c -o objque.o
 objmatch.o: objmatch.c
 	gcc -c objmatch.c -o objmatch.o
 

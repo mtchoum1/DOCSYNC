@@ -144,3 +144,4 @@ int main()
   my_printf("Hello, %s! Your age is %d and your score is %u. Hex value: %x Char: %c String: %s WT%c \n", "John", 25, 100, 0xDEADBEEF, 'c', "hello", 'f');
   
   return 0;
+}

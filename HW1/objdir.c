@@ -30,7 +30,7 @@ void loopdir(char *pathname, char *fval, int lflag, char *str)
 	{
 	  actualpath = realpath(full_name, NULL);
 	  lstat(actualpath, &buf);
-	  if (S_ISDIR(buf.st_mode))
+	  if (S_ISDIR(buf.st_mode) || S_ISLNK(buf.st_mode))
 	  {
 	    if (actualpath != NULL)
             {

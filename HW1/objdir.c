@@ -64,6 +64,7 @@ void loopdir(char *pathname, char *fval, int lflag, char *str)
 		}
 	    }
 	}
+      }
 	else
 	{
 	  if (fval != NULL && de->d_name[strlen(de->d_name)-1] == fval[strlen(fval)-1] && lflag == 0)

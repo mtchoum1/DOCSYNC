@@ -26,59 +26,57 @@ void loopdir(char *pathname, char *fval, int lflag, char *str)
       }
       else if (S_ISLNK(buf.st_mode))
       {
-	  actualpath = realpath(full_name, NULL);
-	  lstat(actualpath, &buf);
-	  if (S_ISDIR(buf.st_mode) || S_ISLNK(buf.st_mode))
+	actualpath = realpath(full_name, NULL);
+	lstat(actualpath, &buf);
+	if ((S_ISDIR(buf.st_mode) || S_ISLNK(buf.st_mode)) && lflag == 1)
+	{
+	  if (actualpath != NULL)
 	  {
-	    if (actualpath != NULL)
-            {
-	      loopdir(actualpath, fval, lflag, str);
-	    }
-	    else
-            {
-	      perror("realpath");
-            }
+	    loopdir(actualpath, fval, lflag, str);
 	  }
 	  else
-	  {
-	    if (lflag == 1 && fval == NULL)
-	    {
-	      if (actualpath != NULL)
-	      {
-		checkfile(actualpath, full_name, fval, lflag, str);
-	      }
-	      else
-	      {
-		perror("realpath");
-	      }
-	    }
-	    else if (lflag == 1 && fval != NULL && actualpath[strlen(actualpath)-1] == fval[strlen(fval)-1])
-	    {
-	      if (actualpath != NULL)
-	      {
-		checkfile(actualpath, full_name, fval, lflag, str);
-	      }
-	      else
-		{
-		  perror("realpath");
-		}
-	    }
+          {
+	    perror("realpath");
+	  }
 	}
-      }
 	else
 	{
-	  if (fval != NULL && de->d_name[strlen(de->d_name)-1] == fval[strlen(fval)-1] && lflag == 0)
+	  if (lflag == 1 && fval == NULL)
 	  {
-	    checkfile(full_name, "", fval, lflag, str);
+	    if (actualpath != NULL)
+	    {
+	      checkfile(actualpath, full_name, fval, lflag, str);
+	    }
+	    else
+	    {
+	      perror("realpath");
+	    }
 	  }
-	  else if (fval == NULL && lflag == 0)
+	  else if (lflag == 1 && fval != NULL && actualpath[strlen(actualpath)-1] == fval[strlen(fval)-1])
 	  {
-	    checkfile(full_name, "", fval, lflag, str);
+	    if (actualpath != NULL)
+	    {
+	      checkfile(actualpath, full_name, fval, lflag, str);
+	    }
+	    else
+	    {
+	      perror("realpath");
+	    }
 	  }
+	}
+      }
+      else
+      {
+	if (fval != NULL && de->d_name[strlen(de->d_name)-1] == fval[strlen(fval)-1])
+	{
+	  checkfile(full_name, "", fval, lflag, str);
+	}
+	else if (fval == NULL)
+	{
+	  checkfile(full_name, "", fval, lflag, str);
 	}
       }
     }
   }
-  
   closedir(dr);
 }

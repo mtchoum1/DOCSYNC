@@ -24,10 +24,8 @@ void loopdir(char *pathname, char *fval, int lflag, char *str)
       {
 	loopdir(full_name, fval, lflag, str);
       }
-      else
+      else if (S_ISLNK(buf.st_mode))
       {
-	if (S_ISLNK(buf.st_mode))
-	{
 	  actualpath = realpath(full_name, NULL);
 	  lstat(actualpath, &buf);
 	  if (S_ISDIR(buf.st_mode) || S_ISLNK(buf.st_mode))
@@ -65,15 +63,14 @@ void loopdir(char *pathname, char *fval, int lflag, char *str)
 		  perror("realpath");
 		}
 	    }
-	  }
 	}
 	else
 	{
-	  if (fval != NULL && de->d_name[strlen(de->d_name)-1] == fval[strlen(fval)-1])
+	  if (fval != NULL && de->d_name[strlen(de->d_name)-1] == fval[strlen(fval)-1] && lflag == 0)
 	  {
 	    checkfile(full_name, "", fval, lflag, str);
 	  }
-	  else if (fval == NULL)
+	  else if (fval == NULL && lflag == 0)
 	  {
 	    checkfile(full_name, "", fval, lflag, str);
 	  }

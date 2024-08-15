@@ -13,7 +13,7 @@ _Search and Store_
 ## Summary
 DocSync uses NFA / DFA conversion to create a comprehensive search engine that finds any file and file type. Has fast meta data look up using static libraries
 ## Contact
-Personal Email: tchoumi31mo@gmail.com
-Professional Email: mtchoum1@gmail.com
-Phone: (347) - 541 - 1123
-LinkedIn: https://www.linkedin.com/in/moryantn/
+* Personal Email: tchoumi31mo@gmail.com
+* Professional Email: mtchoum1@gmail.com
+* Phone: (347) - 541 - 1123
+* LinkedIn: https://www.linkedin.com/in/moryantn/

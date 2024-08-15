@@ -7,9 +7,9 @@ _Search and Store_
 3. [Contact](#Contact)
 
 ## Features
-Search Engine: comprehensive search engine to find any file
-Objdump: Gets any file meta data 
-Copy: copy any file content to another file
+* Search Engine: comprehensive search engine to find any file
+* Objdump: Gets any file meta data 
+* Copy: copy any file content to another file
 ## Summary
 DocSync uses NFA / DFA conversion to create a comprehensive search engine that finds any file and file type. Has fast meta data look up using static libraries
 ## Contact

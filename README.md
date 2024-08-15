@@ -2,9 +2,9 @@
 _Search and Store_
 
 ## Table of Content
-1. Features
-2. Summary
-3. Contact
+* [Features](#Features)
+* [Summary](#Summary)
+* [Contact](#Contact)
 
 ## Features
 Regular Expression: 
